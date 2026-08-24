@@ -224,14 +224,50 @@ def play_game():
     print("               PARTIDA TERMINADA")
     print("=" * 45)
     print(f"Puntaje Final -> Jugador A: {scores[PLAYER_A]} | Jugador B: {scores[PLAYER_B]}")
-
+    
     if scores[PLAYER_A] > scores[PLAYER_B]:
         print("¡Victoria del Jugador A!")
+        return PLAYER_A
     elif scores[PLAYER_B] > scores[PLAYER_A]:
         print("¡Victoria del Jugador B!")
+        return PLAYER_B
     else:
         print("¡Empate!")
+        return "EMPATE"
+
+def main_menu():
+    """Menú principal que mantiene el historial de victorias en la sesión actual."""
+    wins_a = 0
+    wins_b = 0
+    draws = 0
+
+    while True:
+        resultado = play_game()
+        
+        # Actualizar contadores
+        if resultado == PLAYER_A:
+            wins_a += 1
+        elif resultado == PLAYER_B:
+            wins_b += 1
+        else:
+            draws += 1
+
+        # Mostrar estadísticas globales
+        print("\n" + "=" * 45)
+        print("         ESTADÍSTICAS DE LA SESIÓN")
+        print("=" * 45)
+        print(f"Victorias Jugador A ⚫ : {wins_a}")
+        print(f"Victorias Jugador B ⚪ : {wins_b}")
+        print(f"Empates                : {draws}")
+        print(f"Total de partidas      : {wins_a + wins_b + draws}")
+        print("=" * 45)
+
+        # Preguntar si desean seguir jugando
+        resp = input("\n¿Desean jugar otra partida? (s/n): ").strip().lower()
+        if resp != 's':
+            print("¡Gracias por jugar! Cerrando el programa...")
+            break
 
 
 if __name__ == "__main__":
-    play_game()
+    main_menu()
